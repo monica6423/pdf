@@ -5,6 +5,7 @@ import { chats } from "@/lib/db/schema";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
+import ChatSideBar from "@/components/ChatSideBar";
 
 type Props = {
   params: {
@@ -32,9 +33,8 @@ export default async function ChatPage({params: {chatId}}: Props) {
   return (
     <div className="flex max-h-screen overflow-scroll">
       <div className="flex w-full max-h-screen overflow-scroll">
-        {/* chat sidebar */}
         <div className="flex-[1] max-w-xs">
-
+          <ChatSideBar chats={_chats} chatId={parseInt(chatId)}/>
         </div>
         {/* pdf viewer */}
         <div className="max-h-screen p-4 oveflow-scroll flex-[5]">

@@ -11,6 +11,9 @@ export const chats = pgTable("chats", {
   fileKey: text("file_key").notNull(),
 });
 
+// To retrieve a type from your table schema for select and insert queries
+export type DrizzleChat = typeof chats.$inferSelect;
+
 export const messages = pgTable("messages", {
   id: serial("id").primaryKey(),
   // Chat id will be reference back to the id in the chats table
