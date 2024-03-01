@@ -15,7 +15,7 @@ export async function POST(req: Request, res: Response){
     }
     const body = await req.json();
     const { file_key, file_name } = body;
-    console.log('start loadS3IntoPinecone')
+    console.log('start loadS3IntoPinecone with file key:', file_key)
     await loadS3IntoPinecone(file_key);
     // create a new chat
     const chat_id = await db
@@ -29,7 +29,7 @@ export async function POST(req: Request, res: Response){
       .returning({
         insertedId: chats.id
       })
-      
+
     return NextResponse.json(
       {
         chat_id: chat_id[0].insertedId,
