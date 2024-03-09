@@ -17,7 +17,6 @@ const FileUpload = () => {
         file_key,
         file_name,
       });
-      console.log("response.data", response.data)
       return response.data;
     },
   });
@@ -36,7 +35,6 @@ const FileUpload = () => {
       try {
         setUploading(true)
         const data = await uploadToS3(file);
-        console.log('data', data)
         if (!data?.file_key || !data.file_name) {
           alert("Something went wrong");
           return;

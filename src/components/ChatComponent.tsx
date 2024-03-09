@@ -5,17 +5,30 @@ import { useChat } from "ai/react";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import MessageList from "./MessageList";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Message } from "ai";
 
 type Props = { chatId: number };
 
-const ChatComponent = ({chatId}: Props) => {
+const ChatComponent = ({ chatId }: Props) => {
+  console.log('chatid', chatId)
+  const { data } = useQuery({
+    queryKey: ["chat", chatId],
+    queryFn: async () => {
+      const response = await axios.post<Message[]>('/api/get-messages', { chatId });
+      return response.data;
+    }
+  })
+
   // giving control to gpt?
   // assistent is the AI reply, user is what we sent to the gpt
   const { input, handleInputChange, handleSubmit, messages} = useChat({
     api:"/api/chat",
     body: {
       chatId
-    }
+    },
+    initialMessages: data || []
   });
 
   useEffect(() => {
@@ -27,7 +40,7 @@ const ChatComponent = ({chatId}: Props) => {
       });
     }
   }, [messages])
-  
+
   return (
     <div
       className="relative max-h-screen overflow-scroll"
