@@ -11,7 +11,9 @@ type Props = { pdf_url: string };
 const ChatComponent = () => {
   // giving control to gpt?
   // assistent is the AI reply, user is what we sent to the gpt
-  const { input, handleInputChange, handleSubmit, messages} = useChat();
+  const { input, handleInputChange, handleSubmit, messages} = useChat({
+    api:"/api/chat"
+  });
   return (
     <div
       className="relative max-h-screen overflow-scroll"
@@ -22,12 +24,13 @@ const ChatComponent = () => {
         <h3 className="text-xl font-bold">Chat</h3>
       </div>
       {/* message list */}
-      <MessageList isLoading={false} messages={[]} />
+      <MessageList isLoading={false} messages={messages} />
       <form
         onSubmit={handleSubmit}
         className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white"
       >
         <div className="flex">
+          {/* whenever we submit the input, it will send the current messa to /api/chat */}
           <Input
             value={input}
             onChange={handleInputChange}
