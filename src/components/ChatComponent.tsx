@@ -1,19 +1,33 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Input } from "./ui/input";
 import { useChat } from "ai/react";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import MessageList from "./MessageList";
 
-type Props = { pdf_url: string };
+type Props = { chatId: number };
 
-const ChatComponent = () => {
+const ChatComponent = ({chatId}: Props) => {
   // giving control to gpt?
   // assistent is the AI reply, user is what we sent to the gpt
   const { input, handleInputChange, handleSubmit, messages} = useChat({
-    api:"/api/chat"
+    api:"/api/chat",
+    body: {
+      chatId
+    }
   });
+
+  useEffect(() => {
+    const messageContainer = document.getElementById("message-container");
+    if (messageContainer) {
+      messageContainer.scrollTo({
+        top: messageContainer.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [messages])
+  
   return (
     <div
       className="relative max-h-screen overflow-scroll"
