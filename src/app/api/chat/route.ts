@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
     const lastMessage = messages[messages.length - 1];
 
-    const context = await getContext(lastMessage, fileKey);
+    const context = await getContext(lastMessage.content, fileKey);
 
     const prompt = {
       role: "system",
