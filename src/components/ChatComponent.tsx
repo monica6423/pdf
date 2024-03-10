@@ -61,10 +61,10 @@ const ChatComponent = ({ chatId }: Props) => {
           <Input
             value={input}
             onChange={handleInputChange}
-            placeholder="Ask any question..."
+            placeholder="Send a message."
             className="w-full"
           />
-          <Button className="bg-blue-600 ml-2">
+          <Button className="bg-orange-500 ml-2">
             <Send className="h-4 w-4" />
           </Button>
         </div>
